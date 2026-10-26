@@ -33,6 +33,7 @@ import { PrivacyConsentPage } from './pages/student/PrivacyConsentPage';
 const AppContent: React.FC = () => {
   const { user, loading } = useAuth();
   const [currentTab, setCurrentTab] = useState<string>('');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Check if public verification route is accessed (e.g. /verify/...)
   const isVerifyRoute = window.location.pathname.startsWith('/verify');
@@ -56,10 +57,18 @@ const AppContent: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
-        <div className="flex flex-col items-center gap-3">
-          <div className="w-8 h-8 border-3 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
-          <p className="text-xs font-semibold text-slate-500">Initializing APAAR-Sentinel Platform...</p>
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-950 to-blue-950 flex items-center justify-center text-white">
+        <div className="flex flex-col items-center gap-4 p-8 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md shadow-2xl">
+          <div className="relative">
+            <div className="w-12 h-12 border-3 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+            <div className="absolute inset-0 flex items-center justify-center">
+              <span className="w-2.5 h-2.5 bg-blue-400 rounded-full animate-pulse"></span>
+            </div>
+          </div>
+          <div className="text-center">
+            <p className="text-sm font-bold tracking-tight text-white">APAAR-Sentinel</p>
+            <p className="text-xs font-medium text-slate-400 mt-0.5">Initializing AICTE Regulatory Infrastructure...</p>
+          </div>
         </div>
       </div>
     );
@@ -127,12 +136,22 @@ const AppContent: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col">
-      <Navbar />
+    <div className="min-h-screen bg-slate-50/70 flex flex-col font-sans selection:bg-blue-100 selection:text-blue-900">
+      <Navbar
+        mobileMenuOpen={mobileMenuOpen}
+        onToggleMobileMenu={() => setMobileMenuOpen(prev => !prev)}
+      />
       <div className="flex flex-1">
-        <Sidebar currentTab={currentTab} onSelectTab={setCurrentTab} />
-        <main className="flex-1 p-6 lg:p-8 max-w-7xl mx-auto w-full overflow-y-auto">
-          {renderActiveView()}
+        <Sidebar
+          currentTab={currentTab}
+          onSelectTab={setCurrentTab}
+          mobileMenuOpen={mobileMenuOpen}
+          onCloseMobile={() => setMobileMenuOpen(false)}
+        />
+        <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full overflow-y-auto">
+          <div className="animate-fade-in">
+            {renderActiveView()}
+          </div>
         </main>
       </div>
     </div>
