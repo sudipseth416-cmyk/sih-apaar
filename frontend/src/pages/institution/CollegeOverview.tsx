@@ -65,21 +65,21 @@ export const CollegeOverview: React.FC<CollegeOverviewProps> = ({ onNavigateTab 
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 font-display">
       {/* College Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2.5 flex-wrap">
-            <span className="p-2 rounded-xl bg-blue-100 text-blue-700">
+            <span className="p-2.5 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/20">
               <Building2 className="w-5 h-5" />
             </span>
-            <h1 className="text-2xl font-bold tracking-tight text-slate-900">{stats.name}</h1>
-            <span className="text-xs font-mono font-bold px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 border border-slate-200 shadow-2xs">
+            <h1 className="text-2xl font-black tracking-tight text-slate-900">{stats.name}</h1>
+            <span className="text-xs font-mono font-bold px-2.5 py-1 rounded-xl bg-blue-50 text-blue-800 border border-blue-200 shadow-2xs">
               AICTE ID: {stats.aicteId}
             </span>
           </div>
           <p className="text-xs sm:text-sm text-slate-500 mt-1">
-            Institutional Student Data Administration, APAAR Batch Verification & Sanctioned Seat Compliance • Session 2024–2025.
+            Institutional Student Data Administration, APAAR Batch Verification & Sanctioned Seat Compliance • Session 2026–2027.
           </p>
         </div>
 
@@ -176,7 +176,7 @@ export const CollegeOverview: React.FC<CollegeOverviewProps> = ({ onNavigateTab 
           <div className="p-5 sm:p-6 border-b border-slate-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
               <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wider">Sanctioned Programmes & Capacity Status</h2>
-              <p className="text-xs text-slate-500 mt-0.5">Current active enrolments vs approved intake limits (Academic Session 2024–2025)</p>
+              <p className="text-xs text-slate-500 mt-0.5">Current active enrolments vs approved intake limits (Academic Session 2026–2027)</p>
             </div>
             <a
               href={api.getInstitutionReportPdfUrl(instId)}

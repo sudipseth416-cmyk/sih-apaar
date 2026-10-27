@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Bot, Send, Sparkles, Database, CheckCircle2, ArrowRight, CornerDownLeft, ShieldCheck, Terminal, Cpu } from 'lucide-react';
+import { Bot, Send, Sparkles, Database, CheckCircle2, ArrowRight, CornerDownLeft, ShieldCheck, Terminal, Cpu, AlertTriangle, HelpCircle, BarChart3, Users, Network } from 'lucide-react';
 import { api } from '../../services/api';
 
 interface ChatMessage {
@@ -18,19 +18,54 @@ export const RegulatoryCopilotPage: React.FC = () => {
     {
       id: 'init-1',
       sender: 'copilot',
-      text: 'Welcome to the AICTE Regulatory AI Copilot. You can query institutional databases in natural language to inspect intake compliance, duplicate enrolments, verification rates, and anomaly factors.',
-      matchedTool: 'Initialized Regulatory Query Engine',
+      text: 'Welcome to the AICTE Regulatory AI Copilot (Session 2026–2027). You can query national institutional databases in plain natural language to audit intake compliance, discover duplicate enrolments, check verification rates, and inspect anomaly factors with zero hallucination.',
+      matchedTool: 'Deterministic Regulatory Query Engine v2.4',
       followUpSuggestions: [
         'Show colleges in West Bengal exceeding approved CSE intake',
         'Which institutions have the most unresolved duplicate enrolment cases?',
         'What is the verification rate for engineering students in Maharashtra?',
-        'Compare admission utilization across three institutions',
+        'Compare admission capacity utilization across registered colleges',
       ],
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     },
   ]);
   const [queryInput, setQueryInput] = useState('');
   const [loading, setLoading] = useState(false);
+
+  const quickPromptCards = [
+    {
+      title: 'Audit Intake Violations',
+      desc: 'Show colleges exceeding approved B.Tech CSE intake quotas',
+      query: 'Show colleges in West Bengal exceeding approved CSE intake',
+      icon: AlertTriangle,
+      color: 'from-rose-500 to-amber-500',
+      badgeColor: 'bg-rose-50 text-rose-700 border-rose-200',
+    },
+    {
+      title: 'Investigate Duplicate Enrolments',
+      desc: 'Find unresolved cross-college active enrolment conflicts',
+      query: 'Which institutions have the most unresolved duplicate enrolment cases?',
+      icon: Network,
+      color: 'from-amber-500 to-orange-500',
+      badgeColor: 'bg-amber-50 text-amber-700 border-amber-200',
+    },
+    {
+      title: 'State Verification Metrics',
+      desc: 'Inspect APAAR identity validation rates across states',
+      query: 'What is the verification rate for engineering students in Maharashtra?',
+      icon: ShieldCheck,
+      color: 'from-emerald-500 to-teal-500',
+      badgeColor: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+    },
+    {
+      title: 'Capacity Utilization',
+      desc: 'Compare admissions vs sanctioned ceiling',
+      query: 'Compare admission capacity utilization across registered colleges',
+      icon: BarChart3,
+      color: 'from-blue-600 to-indigo-600',
+      badgeColor: 'bg-blue-50 text-blue-700 border-blue-200',
+    },
+  ];
 
   const handleSend = async (textToSend?: string) => {
     const q = (textToSend || queryInput).trim();
@@ -74,41 +109,79 @@ export const RegulatoryCopilotPage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6 max-w-5xl mx-auto">
+    <div className="space-y-6 max-w-5xl mx-auto font-display">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2">
-            <span className="p-2 rounded-xl bg-blue-100 text-blue-700">
+          <div className="flex items-center gap-2.5 flex-wrap">
+            <span className="p-2.5 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/20">
               <Bot className="w-5 h-5" />
             </span>
-            <h1 className="text-2xl font-bold tracking-tight text-slate-900">
+            <h1 className="text-2xl font-black tracking-tight text-slate-900">
               AICTE Regulatory AI Copilot
             </h1>
+            <span className="text-xs font-mono font-bold px-2.5 py-1 rounded-xl bg-blue-50 text-blue-800 border border-blue-200 shadow-2xs">
+              Deterministic Query Engine • 2026–2027
+            </span>
           </div>
           <p className="text-xs sm:text-sm text-slate-500 mt-1">
-            Natural language interface executing controlled, deterministic analytical tools on institutional databases with zero hallucination.
+            Natural language interface executing controlled, deterministic analytical tools on national institutional databases with zero hallucination.
           </p>
         </div>
         <div className="flex items-center gap-2">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 text-blue-700 border border-blue-200/90 rounded-xl text-xs font-bold shadow-2xs">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-700 border border-blue-200 rounded-xl text-xs font-bold shadow-2xs">
             <Cpu className="w-3.5 h-3.5 text-blue-600" />
-            <span>Deterministic Tool Routing Active</span>
+            <span>Deterministic Sandbox Active</span>
           </span>
         </div>
       </div>
 
+      {/* Quick Prompt Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+        {quickPromptCards.map((card, idx) => {
+          const Icon = card.icon;
+          return (
+            <button
+              key={idx}
+              onClick={() => handleSend(card.query)}
+              className="p-3.5 bg-white hover:bg-slate-50 border border-slate-200/90 rounded-2xl text-left transition-all hover:shadow-subtle hover:border-blue-300 group flex flex-col justify-between"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <div className={`w-8 h-8 rounded-xl bg-gradient-to-tr ${card.color} text-white flex items-center justify-center shadow-xs`}>
+                    <Icon className="w-4 h-4" />
+                  </div>
+                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-md border ${card.badgeColor}`}>
+                    Quick Query
+                  </span>
+                </div>
+                <h4 className="text-xs font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
+                  {card.title}
+                </h4>
+                <p className="text-[11px] text-slate-500 mt-1 line-clamp-2 font-medium">
+                  {card.desc}
+                </p>
+              </div>
+              <div className="mt-3 flex items-center gap-1 text-[11px] text-blue-600 font-bold">
+                <span>Run Query</span>
+                <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+              </div>
+            </button>
+          );
+        })}
+      </div>
+
       {/* Chat Conversation Card */}
-      <div className="bg-white rounded-2xl border border-slate-200/90 shadow-elevated flex flex-col h-[640px] overflow-hidden">
+      <div className="bg-white rounded-2xl border border-slate-200/90 shadow-elevated flex flex-col h-[580px] overflow-hidden">
         {/* Messages Scroll Area */}
-        <div className="flex-1 p-5 sm:p-6 overflow-y-auto space-y-6 bg-slate-50/40">
+        <div className="flex-1 p-5 sm:p-6 overflow-y-auto space-y-6 bg-slate-50/50">
           {messages.map(msg => (
             <div
               key={msg.id}
               className={`flex gap-3 sm:gap-4 ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
             >
               {msg.sender === 'copilot' && (
-                <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-700 to-indigo-600 text-white flex items-center justify-center shrink-0 shadow-glow-primary">
+                <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-700 to-indigo-600 text-white flex items-center justify-center shrink-0 shadow-md shadow-blue-500/20">
                   <Bot className="w-5 h-5 stroke-[2]" />
                 </div>
               )}
@@ -116,7 +189,7 @@ export const RegulatoryCopilotPage: React.FC = () => {
               <div
                 className={`max-w-2xl rounded-2xl p-4 sm:p-5 text-xs ${
                   msg.sender === 'user'
-                    ? 'bg-blue-600 text-white rounded-br-xs shadow-md'
+                    ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-br-xs shadow-md'
                     : 'bg-white border border-slate-200/90 text-slate-900 rounded-bl-xs shadow-subtle'
                 }`}
               >
@@ -169,7 +242,7 @@ export const RegulatoryCopilotPage: React.FC = () => {
                         <button
                           key={idx}
                           onClick={() => handleSend(s)}
-                          className="text-[11px] font-semibold bg-slate-50 hover:bg-blue-50 text-blue-700 hover:text-blue-800 border border-slate-200 hover:border-blue-300 px-3 py-1.5 rounded-lg text-left transition-all flex items-center gap-1.5 active:scale-98 shadow-2xs"
+                          className="text-[11px] font-bold bg-slate-50 hover:bg-blue-50 text-blue-700 hover:text-blue-800 border border-slate-200 hover:border-blue-300 px-3 py-1.5 rounded-xl text-left transition-all flex items-center gap-1.5 active:scale-98 shadow-2xs"
                         >
                           <span>{s}</span>
                           <ArrowRight className="w-3 h-3 text-blue-400" />
@@ -179,7 +252,7 @@ export const RegulatoryCopilotPage: React.FC = () => {
                   </div>
                 )}
 
-                <div className={`text-[10px] mt-2.5 font-medium ${msg.sender === 'user' ? 'text-blue-200' : 'text-slate-400'}`}>
+                <div className={`text-[10px] mt-2.5 font-medium ${msg.sender === 'user' ? 'text-blue-100' : 'text-slate-400'}`}>
                   {msg.timestamp}
                 </div>
               </div>
@@ -188,12 +261,12 @@ export const RegulatoryCopilotPage: React.FC = () => {
 
           {loading && (
             <div className="flex gap-3 justify-start animate-fade-in">
-              <div className="w-9 h-9 rounded-xl bg-blue-600 text-white flex items-center justify-center shrink-0 shadow-glow-primary">
-                <Bot className="w-4 h-4 animate-spin" />
+              <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center shrink-0 shadow-md">
+                <Bot className="w-5 h-5 animate-spin" />
               </div>
               <div className="bg-white border border-slate-200/90 p-4 rounded-2xl rounded-bl-xs text-xs text-slate-600 flex items-center gap-2 shadow-subtle">
                 <span className="w-2 h-2 rounded-full bg-blue-600 animate-ping"></span>
-                <span className="font-semibold">Executing allowlisted regulatory database query...</span>
+                <span className="font-bold">Executing allowlisted regulatory database query...</span>
               </div>
             </div>
           )}
@@ -208,12 +281,12 @@ export const RegulatoryCopilotPage: React.FC = () => {
             onChange={e => setQueryInput(e.target.value)}
             onKeyDown={e => e.key === 'Enter' && handleSend()}
             disabled={loading}
-            className="flex-1 px-4 py-3 bg-slate-50 hover:bg-white focus:bg-white border border-slate-200 rounded-xl text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all shadow-2xs"
+            className="flex-1 px-4 py-3 bg-slate-50 hover:bg-white focus:bg-white border border-slate-200 rounded-xl text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all shadow-2xs font-medium"
           />
           <button
             onClick={() => handleSend()}
             disabled={loading || !queryInput.trim()}
-            className="px-5 py-3 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white rounded-xl text-xs font-bold flex items-center gap-2 transition-all shadow-glow-primary active:scale-98"
+            className="px-5 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 disabled:opacity-50 text-white rounded-xl text-xs font-bold flex items-center gap-2 transition-all shadow-md shadow-blue-500/20 active:scale-98"
           >
             <span>Ask AI</span>
             <Send className="w-3.5 h-3.5" />

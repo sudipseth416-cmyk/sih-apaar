@@ -1,0 +1,6 @@
+StudentName,APAAR_No,DOB,Gender,Email,mobile_no,RollNumber,Branch,AdmissionCategory,AdmissionDate
+Vikram Malhotra,9825-1029-3847,2004-02-14,Male,vikram.m@example.com,9812001122,TIT-2024-CSE-401,CSE,GENERAL,2024-08-01
+Pooja Hegde,9825-9988-7766,2004-06-20,Female,pooja.h@example.com,9812001123,TIT-2024-CSE-402,CSE,OBC,2024-08-01
+Sanjay Dutta,9824-3344-5566,2004-08-11,Male,sanjay.d@example.com,9812001124,TIT-2024-ECE-403,ECE,GENERAL,2024-08-01
+Rituja Patil,9824-5566-7788,2004-10-05,Female,rituja.p@example.com,9812001125,TIT-2024-ME-404,ME,SC,2024-08-01
+Deepak Sundaram,9824-7788-9900,2004-04-16,Male,deepak.s@example.com,9812001126,TIT-2024-CSE-405,CSE,EWS,2024-08-01

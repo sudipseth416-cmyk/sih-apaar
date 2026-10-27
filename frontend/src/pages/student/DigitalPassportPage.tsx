@@ -126,26 +126,29 @@ export const DigitalPassportPage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6 max-w-4xl mx-auto">
+    <div className="space-y-6 max-w-4xl mx-auto font-display">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2">
-            <span className="p-2 rounded-xl bg-blue-100 text-blue-700">
+          <div className="flex items-center gap-2.5 flex-wrap">
+            <span className="p-2.5 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/20">
               <QrCode className="w-5 h-5" />
             </span>
-            <h1 className="text-2xl font-bold tracking-tight text-slate-900">
+            <h1 className="text-2xl font-black tracking-tight text-slate-900">
               Smart Digital Enrolment Passport
             </h1>
+            <span className="text-xs font-mono font-bold px-2.5 py-1 rounded-xl bg-blue-50 text-blue-800 border border-blue-200 shadow-2xs">
+              Cryptographic Proof • 2026–2027
+            </span>
           </div>
           <p className="text-xs sm:text-sm text-slate-500 mt-1">
-            Digitally sealed verifiable academic credentials backed by AICTE HMAC-SHA256 signatures for employer and institutional verification.
+            Digitally sealed verifiable academic credentials backed by HMAC-SHA256 signatures for employer and institutional verification.
           </p>
         </div>
         <button
           onClick={handleIssueNew}
           disabled={issuing}
-          className="inline-flex items-center gap-2 px-4 py-2.5 text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 disabled:opacity-50 rounded-xl shadow-glow-primary transition-all active:scale-98"
+          className="inline-flex items-center gap-2 px-5 py-2.5 text-xs font-bold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 disabled:opacity-50 rounded-xl shadow-md shadow-blue-500/20 transition-all active:scale-98"
         >
           <Sparkles className="w-4 h-4" />
           <span>{issuing ? 'Generating Signature...' : 'Re-issue Passport'}</span>
@@ -161,17 +164,17 @@ export const DigitalPassportPage: React.FC = () => {
 
             <div className="relative z-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 flex-wrap">
                   <span className="text-[10px] font-bold tracking-widest uppercase text-blue-300">
-                    ALL INDIA COUNCIL FOR TECHNICAL EDUCATION
+                    AICTE REGULATORY FRAMEWORK
                   </span>
                   <span className="w-1.5 h-1.5 rounded-full bg-blue-400"></span>
-                  <span className="text-[10px] font-mono text-slate-400">AY 2024–25</span>
+                  <span className="text-[10px] font-mono text-slate-400 font-bold">Session 2026–2027 • Team Stratix</span>
                 </div>
                 <h2 className="text-xl sm:text-2xl font-black tracking-tight mt-1 text-white">
                   National Digital Enrolment Passport
                 </h2>
-                <p className="text-xs text-blue-200 font-mono mt-1">
+                <p className="text-xs text-blue-200 font-mono mt-1 font-bold">
                   Credential ID: {activeCred.credential_reference}
                 </p>
               </div>
@@ -196,13 +199,13 @@ export const DigitalPassportPage: React.FC = () => {
             {/* Student & Institution Metadata */}
             <div className="md:col-span-8 space-y-5">
               <div className="grid grid-cols-2 gap-4 text-xs">
-                <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/60">
+                <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
                   <span className="text-slate-400 block uppercase tracking-wider text-[10px] font-bold">Student Name</span>
                   <p className="text-base font-bold text-slate-900 mt-0.5">{user?.name || 'Student User'}</p>
                 </div>
-                <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/60">
+                <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
                   <span className="text-slate-400 block uppercase tracking-wider text-[10px] font-bold">Enrolment Status</span>
-                  <p className="text-base font-bold text-slate-900 mt-0.5 font-mono text-emerald-600">{activeCred.enrolment_status || 'ACTIVE'}</p>
+                  <p className="text-base font-bold font-mono text-emerald-600 mt-0.5">{activeCred.enrolment_status || 'ACTIVE'}</p>
                 </div>
                 <div>
                   <span className="text-slate-400 block uppercase tracking-wider text-[10px] font-bold">Institution</span>
@@ -212,20 +215,20 @@ export const DigitalPassportPage: React.FC = () => {
                 <div>
                   <span className="text-slate-400 block uppercase tracking-wider text-[10px] font-bold">Programme</span>
                   <p className="font-bold text-slate-900 mt-0.5">{activeCred.programme_name} ({activeCred.programme_code})</p>
-                  <p className="text-[11px] text-slate-500 font-mono">Roll: {activeCred.roll_number}</p>
+                  <p className="text-[11px] text-slate-500 font-mono font-bold">Roll: {activeCred.roll_number}</p>
                 </div>
                 <div>
                   <span className="text-slate-400 block uppercase tracking-wider text-[10px] font-bold">Issue Timestamp</span>
-                  <p className="font-mono text-slate-700 font-semibold mt-0.5">{new Date(activeCred.created_at).toLocaleDateString()}</p>
+                  <p className="font-mono text-slate-700 font-bold mt-0.5">{new Date(activeCred.created_at).toLocaleDateString()}</p>
                 </div>
                 <div>
                   <span className="text-slate-400 block uppercase tracking-wider text-[10px] font-bold">Validity Expiration</span>
-                  <p className="font-mono text-slate-700 font-semibold mt-0.5">{new Date(activeCred.expires_at).toLocaleDateString()}</p>
+                  <p className="font-mono text-slate-700 font-bold mt-0.5">{new Date(activeCred.expires_at).toLocaleDateString()}</p>
                 </div>
               </div>
 
               {/* Cryptographic Digital Signature Strip */}
-              <div className="p-3.5 bg-slate-50 rounded-2xl border border-slate-200 text-xs">
+              <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 text-xs">
                 <div className="flex items-center justify-between text-slate-700 font-bold mb-1.5">
                   <div className="flex items-center gap-1.5">
                     <ShieldCheck className="w-4 h-4 text-emerald-600" />
@@ -233,9 +236,9 @@ export const DigitalPassportPage: React.FC = () => {
                   </div>
                   <button
                     onClick={handleCopySig}
-                    className="text-[10px] font-semibold text-blue-600 hover:text-blue-700 flex items-center gap-1"
+                    className="text-[11px] font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1"
                   >
-                    {sigCopied ? <Check className="w-3 h-3 text-emerald-600" /> : <Copy className="w-3 h-3" />}
+                    {sigCopied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
                     <span>{sigCopied ? 'Copied' : 'Copy Hash'}</span>
                   </button>
                 </div>
@@ -246,8 +249,8 @@ export const DigitalPassportPage: React.FC = () => {
             </div>
 
             {/* QR Code Column */}
-            <div className="md:col-span-4 flex flex-col items-center justify-center p-6 bg-gradient-to-b from-slate-50 to-blue-50/30 rounded-2xl border border-slate-200 text-center">
-              <div className="relative p-2 bg-white rounded-2xl shadow-subtle border border-slate-200">
+            <div className="md:col-span-4 flex flex-col items-center justify-center p-6 bg-gradient-to-b from-slate-50 to-blue-50/40 rounded-2xl border border-slate-200 text-center">
+              <div className="relative p-2.5 bg-white rounded-2xl shadow-subtle border border-slate-200">
                 {qrDataUrl ? (
                   <img
                     src={qrDataUrl}
@@ -258,10 +261,10 @@ export const DigitalPassportPage: React.FC = () => {
                   <div className="w-44 h-44 bg-slate-200 rounded-xl animate-pulse"></div>
                 )}
               </div>
-              <span className="text-[11px] font-bold text-slate-700 mt-3 font-mono">
+              <span className="text-[11px] font-bold text-slate-800 mt-3 font-mono">
                 Scan with Camera to Verify
               </span>
-              <span className="text-[10px] text-slate-400 mt-0.5">
+              <span className="text-[10px] text-slate-500 mt-0.5 font-medium">
                 Public Gateway • AICTE Sentinel
               </span>
             </div>
@@ -272,7 +275,7 @@ export const DigitalPassportPage: React.FC = () => {
             <div className="flex items-center gap-2">
               <button
                 onClick={handleCopyLink}
-                className="flex items-center gap-1.5 px-3.5 py-2 bg-white border border-slate-200 hover:bg-slate-100 rounded-xl text-slate-700 font-bold transition-all shadow-2xs active:scale-98"
+                className="flex items-center gap-1.5 px-4 py-2 bg-white border border-slate-200 hover:bg-slate-100 rounded-xl text-slate-700 font-bold transition-all shadow-2xs active:scale-98"
               >
                 {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
                 <span>{copied ? 'Link Copied' : 'Copy Verification URL'}</span>
@@ -281,7 +284,7 @@ export const DigitalPassportPage: React.FC = () => {
                 href={`/verify/${activeCred.credential_reference}`}
                 target="_blank"
                 rel="noreferrer"
-                className="flex items-center gap-1.5 px-3.5 py-2 bg-white border border-slate-200 hover:bg-slate-100 rounded-xl text-slate-700 font-bold transition-all shadow-2xs active:scale-98"
+                className="flex items-center gap-1.5 px-4 py-2 bg-white border border-slate-200 hover:bg-slate-100 rounded-xl text-slate-700 font-bold transition-all shadow-2xs active:scale-98"
               >
                 <ExternalLink className="w-3.5 h-3.5" />
                 <span>Open Verification Portal</span>
@@ -292,7 +295,7 @@ export const DigitalPassportPage: React.FC = () => {
               <button
                 onClick={handleRevoke}
                 disabled={revoking}
-                className="flex items-center gap-1.5 px-3.5 py-2 bg-rose-50 text-rose-700 border border-rose-200 hover:bg-rose-100 rounded-xl font-bold transition-all active:scale-98 shadow-2xs"
+                className="flex items-center gap-1.5 px-4 py-2 bg-rose-50 text-rose-700 border border-rose-200 hover:bg-rose-100 rounded-xl font-bold transition-all active:scale-98 shadow-2xs"
               >
                 <AlertTriangle className="w-3.5 h-3.5 text-rose-600" />
                 <span>{revoking ? 'Revoking...' : 'Revoke Credential'}</span>
@@ -304,13 +307,13 @@ export const DigitalPassportPage: React.FC = () => {
         <div className="bg-white p-16 text-center rounded-3xl border border-slate-200 shadow-subtle">
           <QrCode className="w-12 h-12 text-slate-400 mx-auto mb-3" />
           <h3 className="text-base font-bold text-slate-900">No Digital Passport Issued Yet</h3>
-          <p className="text-xs text-slate-500 max-w-sm mx-auto mt-1 leading-relaxed">
+          <p className="text-xs text-slate-500 max-w-sm mx-auto mt-1 leading-relaxed font-medium">
             Generate a digitally signed, cryptographic proof of enrolment to share with employers and external institutions.
           </p>
           <button
             onClick={handleIssueNew}
             disabled={issuing}
-            className="mt-5 px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold shadow-glow-primary active:scale-98 transition-all"
+            className="mt-5 px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold shadow-md shadow-blue-500/20 active:scale-98 transition-all"
           >
             Issue Passport Now
           </button>

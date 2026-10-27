@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FileEdit, CheckCircle2, XCircle, Clock, FileText, Check, ShieldCheck } from 'lucide-react';
+import { FileEdit, CheckCircle2, XCircle, Clock, FileText, Check, ShieldCheck, UserCheck } from 'lucide-react';
 import { StatusBadge } from '../../components/common/StatusBadge';
 import { useAuth } from '../../contexts/AuthContext';
 import { api } from '../../services/api';
@@ -52,29 +52,38 @@ export const CorrectionReviewPage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 font-display">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-slate-900">Student Record Correction Portal</h1>
-          <p className="text-sm text-slate-500 mt-1">
+          <div className="flex items-center gap-2.5 flex-wrap">
+            <span className="p-2.5 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/20">
+              <FileEdit className="w-5 h-5" />
+            </span>
+            <h1 className="text-2xl font-black tracking-tight text-slate-900">Student Record Correction Portal</h1>
+            <span className="text-xs font-mono font-bold px-2.5 py-1 rounded-xl bg-blue-50 text-blue-800 border border-blue-200 shadow-2xs">
+              Academic Session 2026–2027
+            </span>
+          </div>
+          <p className="text-xs sm:text-sm text-slate-500 mt-1">
             Review discrepancies reported by students regarding inaccurate names, programmes, or outdated enrolment statuses.
           </p>
         </div>
-        <div className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-blue-50 text-blue-700 border border-blue-200">
-          {requests.filter(r => r.status === 'SUBMITTED').length} Pending Action
+        <div className="text-xs font-bold px-3.5 py-2 rounded-xl bg-amber-50 text-amber-800 border border-amber-200 shadow-2xs flex items-center gap-1.5">
+          <Clock className="w-4 h-4 text-amber-600" />
+          <span>{requests.filter(r => r.status === 'SUBMITTED').length} Pending Action</span>
         </div>
       </div>
 
       {/* Main Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Requests List Table */}
-        <div className="lg:col-span-7 bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-          <div className="p-4 border-b border-slate-200 flex items-center justify-between">
+        <div className="lg:col-span-7 bg-white rounded-2xl border border-slate-200/90 shadow-subtle overflow-hidden">
+          <div className="p-5 border-b border-slate-200/80 flex items-center justify-between">
             <h3 className="text-xs font-bold text-slate-700 uppercase tracking-wider">
               Submitted Discrepancy Tickets
             </h3>
-            <span className="text-xs text-slate-500 font-mono">{requests.length} Total</span>
+            <span className="text-xs text-slate-500 font-mono font-bold bg-slate-100 px-2 py-0.5 rounded">{requests.length} Total</span>
           </div>
 
           <div className="divide-y divide-slate-100">
@@ -84,14 +93,14 @@ export const CorrectionReviewPage: React.FC = () => {
                 <div
                   key={req.id}
                   onClick={() => setSelectedRequest(req)}
-                  className={`p-4 cursor-pointer transition-colors ${
-                    isSelected ? 'bg-blue-50/70' : 'hover:bg-slate-50'
+                  className={`p-4 sm:p-5 cursor-pointer transition-colors ${
+                    isSelected ? 'bg-blue-50/70 border-l-4 border-l-blue-600' : 'hover:bg-slate-50'
                   }`}
                 >
                   <div className="flex items-start justify-between">
                     <div>
-                      <span className="font-semibold text-xs text-slate-900">{req.student_name}</span>
-                      <span className="text-slate-400 font-mono text-[11px] ml-2">
+                      <span className="font-bold text-sm text-slate-900">{req.student_name}</span>
+                      <span className="text-slate-500 font-mono text-[11px] ml-2 font-medium">
                         {req.apaar_id_masked}
                       </span>
                       <p className="text-xs text-slate-600 mt-1 font-medium">
@@ -101,18 +110,18 @@ export const CorrectionReviewPage: React.FC = () => {
                     <StatusBadge status={req.status} size="sm" />
                   </div>
 
-                  <div className="mt-2 flex items-center gap-2 text-xs">
-                    <span className="text-slate-400">Current:</span>
-                    <span className="font-mono bg-slate-100 px-1.5 py-0.5 rounded text-slate-600 line-through">
+                  <div className="mt-3 flex items-center gap-2 text-xs">
+                    <span className="text-slate-400 font-medium">Current:</span>
+                    <span className="font-mono bg-slate-100 px-2 py-0.5 rounded text-slate-600 line-through">
                       {req.current_value}
                     </span>
-                    <span className="text-slate-400">→ Proposed:</span>
-                    <span className="font-mono bg-emerald-50 px-1.5 py-0.5 rounded text-emerald-800 font-bold">
+                    <span className="text-slate-400 font-medium">→ Proposed:</span>
+                    <span className="font-mono bg-emerald-50 px-2 py-0.5 rounded text-emerald-800 font-bold border border-emerald-200">
                       {req.proposed_value}
                     </span>
                   </div>
 
-                  <p className="mt-2 text-xs text-slate-500 line-clamp-1 italic">
+                  <p className="mt-2 text-xs text-slate-500 line-clamp-1 italic font-medium">
                     Reason: "{req.reason}"
                   </p>
                 </div>
@@ -128,7 +137,7 @@ export const CorrectionReviewPage: React.FC = () => {
         </div>
 
         {/* Action Panel for Selected Request */}
-        <div className="lg:col-span-5 bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+        <div className="lg:col-span-5 bg-white p-5 sm:p-6 rounded-2xl border border-slate-200/90 shadow-subtle flex flex-col justify-between">
           {selectedRequest ? (
             <div className="space-y-5">
               <div className="border-b border-slate-200 pb-3 flex items-start justify-between">
@@ -140,44 +149,44 @@ export const CorrectionReviewPage: React.FC = () => {
               </div>
 
               {/* Student Demographics & Roll */}
-              <div className="p-3 bg-slate-50 rounded-lg border border-slate-200 text-xs space-y-1.5">
+              <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 text-xs space-y-2">
                 <div className="flex justify-between">
-                  <span className="text-slate-500">Student:</span>
-                  <span className="font-semibold text-slate-900">{selectedRequest.student_name}</span>
+                  <span className="text-slate-500 font-medium">Student:</span>
+                  <span className="font-bold text-slate-900">{selectedRequest.student_name}</span>
                 </div>
                 <div className="flex justify-between font-mono">
-                  <span className="text-slate-500">APAAR:</span>
-                  <span className="text-slate-800">{selectedRequest.apaar_id_masked}</span>
+                  <span className="text-slate-500 font-medium">APAAR:</span>
+                  <span className="text-slate-800 font-bold">{selectedRequest.apaar_id_masked}</span>
                 </div>
                 <div className="flex justify-between font-mono">
-                  <span className="text-slate-500">Roll Number:</span>
-                  <span className="text-slate-800">{selectedRequest.roll_number}</span>
+                  <span className="text-slate-500 font-medium">Roll Number:</span>
+                  <span className="text-slate-800 font-bold">{selectedRequest.roll_number}</span>
                 </div>
               </div>
 
               {/* Proposed Transformation Card */}
-              <div className="p-3.5 bg-blue-50/50 rounded-lg border border-blue-200 text-xs space-y-2">
+              <div className="p-4 bg-blue-50/60 rounded-xl border border-blue-200 text-xs space-y-2.5">
                 <span className="text-[10px] uppercase font-bold text-blue-700 tracking-wider">
                   Target Field: {selectedRequest.field_name}
                 </span>
                 <div className="grid grid-cols-2 gap-2 text-center font-mono text-xs">
-                  <div className="p-2 bg-white rounded border border-slate-200">
-                    <span className="text-[10px] text-slate-400 block">Existing Value</span>
-                    <strong className="text-rose-700">{selectedRequest.current_value}</strong>
+                  <div className="p-2.5 bg-white rounded-lg border border-slate-200">
+                    <span className="text-[10px] text-slate-400 block uppercase font-sans">Existing Value</span>
+                    <strong className="text-rose-700 text-sm">{selectedRequest.current_value}</strong>
                   </div>
-                  <div className="p-2 bg-white rounded border border-emerald-200">
-                    <span className="text-[10px] text-emerald-700 block">Proposed Value</span>
-                    <strong className="text-emerald-700">{selectedRequest.proposed_value}</strong>
+                  <div className="p-2.5 bg-white rounded-lg border border-emerald-200">
+                    <span className="text-[10px] text-emerald-700 block uppercase font-sans font-bold">Proposed Value</span>
+                    <strong className="text-emerald-700 text-sm">{selectedRequest.proposed_value}</strong>
                   </div>
                 </div>
 
-                <div className="pt-2 border-t border-blue-200/60">
-                  <span className="text-slate-500 block text-[11px] font-semibold">Student Justification:</span>
-                  <p className="text-slate-700 italic mt-0.5">{selectedRequest.reason}</p>
+                <div className="pt-2 border-t border-blue-200/80">
+                  <span className="text-slate-500 block text-[11px] font-bold">Student Justification:</span>
+                  <p className="text-slate-800 italic mt-0.5 font-medium">{selectedRequest.reason}</p>
                 </div>
 
                 {selectedRequest.evidence_url && (
-                  <div className="pt-2 text-[11px] text-slate-500 flex items-center gap-1.5">
+                  <div className="pt-2 text-[11px] text-slate-600 flex items-center gap-1.5 font-medium">
                     <FileText className="w-3.5 h-3.5 text-blue-600" />
                     <span>Evidence Attached: <strong>{selectedRequest.evidence_url}</strong></span>
                   </div>
@@ -187,7 +196,7 @@ export const CorrectionReviewPage: React.FC = () => {
               {/* Review Actions if Submitted */}
               {selectedRequest.status === 'SUBMITTED' ? (
                 <div className="space-y-3 pt-2">
-                  <label className="block text-xs font-semibold text-slate-700">
+                  <label className="block text-xs font-bold text-slate-700">
                     Reviewer Comments & Audit Notes
                   </label>
                   <textarea
@@ -195,29 +204,29 @@ export const CorrectionReviewPage: React.FC = () => {
                     placeholder="Enter approval or rejection comments..."
                     value={comments}
                     onChange={e => setComments(e.target.value)}
-                    className="w-full p-2 text-xs border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full p-2.5 text-xs border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 font-medium shadow-2xs"
                   />
                   <div className="grid grid-cols-2 gap-2">
                     <button
                       onClick={() => handleReviewAction('REJECTED')}
                       disabled={submitting}
-                      className="py-2 bg-white border border-rose-200 text-rose-700 hover:bg-rose-50 rounded-lg text-xs font-semibold transition-colors flex items-center justify-center gap-1"
+                      className="py-2.5 bg-white border border-rose-200 text-rose-700 hover:bg-rose-50 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1 active:scale-98 shadow-2xs"
                     >
-                      <XCircle className="w-3.5 h-3.5" />
+                      <XCircle className="w-4 h-4" />
                       <span>Reject Request</span>
                     </button>
                     <button
                       onClick={() => handleReviewAction('APPROVED')}
                       disabled={submitting}
-                      className="py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-semibold transition-colors flex items-center justify-center gap-1 shadow-sm"
+                      className="py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1 shadow-md shadow-emerald-500/20 active:scale-98"
                     >
-                      <CheckCircle2 className="w-3.5 h-3.5" />
+                      <CheckCircle2 className="w-4 h-4" />
                       <span>Approve & Sync</span>
                     </button>
                   </div>
                 </div>
               ) : (
-                <div className="p-3 bg-slate-50 rounded-lg border border-slate-200 text-xs text-slate-500">
+                <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-200 text-xs text-slate-500 font-medium">
                   This request was formally resolved. Decision: <strong>{selectedRequest.status}</strong>.
                 </div>
               )}
@@ -228,8 +237,8 @@ export const CorrectionReviewPage: React.FC = () => {
             </div>
           )}
 
-          <div className="text-[11px] text-slate-400 text-center pt-3 border-t border-slate-100">
-            AICTE Record Correction & Verification Protocol
+          <div className="text-[11px] text-slate-400 text-center pt-3 border-t border-slate-100 font-medium">
+            AICTE Record Correction & Verification Protocol • Team Stratix 2026–2027
           </div>
         </div>
       </div>

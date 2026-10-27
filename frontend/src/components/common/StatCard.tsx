@@ -25,29 +25,34 @@ export const StatCard: React.FC<StatCardProps> = ({
 }) => {
   const variantStyles = {
     default: {
-      card: 'bg-white border-slate-200/90 text-slate-900 hover:border-slate-300',
-      accent: 'bg-slate-400',
-      iconBox: 'bg-slate-100 text-slate-700',
+      card: 'bg-gradient-to-br from-white via-slate-50/60 to-slate-100/40 border-slate-200/90 text-slate-900 hover:border-slate-400 shadow-xs',
+      accent: 'bg-gradient-to-r from-slate-500 to-slate-700',
+      iconBox: 'bg-gradient-to-tr from-slate-700 to-slate-900 text-white shadow-md shadow-slate-900/15',
+      valueColor: 'text-slate-900',
     },
     success: {
-      card: 'bg-gradient-to-br from-white to-emerald-50/40 border-emerald-200/90 text-emerald-950 hover:border-emerald-300',
-      accent: 'bg-emerald-500',
-      iconBox: 'bg-emerald-100 text-emerald-700',
+      card: 'bg-gradient-to-br from-white via-emerald-50/50 to-emerald-100/30 border-emerald-200 hover:border-emerald-400 text-emerald-950 shadow-xs',
+      accent: 'bg-gradient-to-r from-emerald-400 to-teal-500',
+      iconBox: 'bg-gradient-to-tr from-emerald-600 to-teal-600 text-white shadow-md shadow-emerald-500/20',
+      valueColor: 'text-emerald-950',
     },
     warning: {
-      card: 'bg-gradient-to-br from-white to-amber-50/40 border-amber-200/90 text-amber-950 hover:border-amber-300',
-      accent: 'bg-amber-500',
-      iconBox: 'bg-amber-100 text-amber-700',
+      card: 'bg-gradient-to-br from-white via-amber-50/50 to-amber-100/30 border-amber-200 hover:border-amber-400 text-amber-950 shadow-xs',
+      accent: 'bg-gradient-to-r from-amber-400 to-orange-500',
+      iconBox: 'bg-gradient-to-tr from-amber-500 to-orange-600 text-white shadow-md shadow-amber-500/20',
+      valueColor: 'text-amber-950',
     },
     danger: {
-      card: 'bg-gradient-to-br from-white to-rose-50/50 border-rose-200/90 text-rose-950 hover:border-rose-300',
-      accent: 'bg-rose-500',
-      iconBox: 'bg-rose-100 text-rose-700',
+      card: 'bg-gradient-to-br from-white via-rose-50/60 to-rose-100/40 border-rose-200 hover:border-rose-400 text-rose-950 shadow-xs',
+      accent: 'bg-gradient-to-r from-rose-500 to-red-600',
+      iconBox: 'bg-gradient-to-tr from-rose-600 to-red-600 text-white shadow-md shadow-rose-500/25',
+      valueColor: 'text-rose-900',
     },
     info: {
-      card: 'bg-gradient-to-br from-white to-blue-50/40 border-blue-200/90 text-blue-950 hover:border-blue-300',
-      accent: 'bg-blue-600',
-      iconBox: 'bg-blue-100 text-blue-700',
+      card: 'bg-gradient-to-br from-white via-blue-50/50 to-indigo-100/30 border-blue-200 hover:border-blue-400 text-blue-950 shadow-xs',
+      accent: 'bg-gradient-to-r from-blue-500 to-indigo-600',
+      iconBox: 'bg-gradient-to-tr from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/20',
+      valueColor: 'text-blue-950',
     },
   };
 
@@ -56,34 +61,36 @@ export const StatCard: React.FC<StatCardProps> = ({
   return (
     <div
       onClick={onClick}
-      className={`relative overflow-hidden rounded-xl border p-5 transition-all shadow-subtle ${style.card} ${
-        onClick ? 'cursor-pointer hover:shadow-elevated hover:-translate-y-0.5' : ''
+      className={`relative overflow-hidden rounded-2xl border p-5 transition-all duration-200 font-display ${style.card} ${
+        onClick ? 'cursor-pointer hover:shadow-elevated hover:-translate-y-0.5 active:scale-[0.99]' : ''
       }`}
     >
-      {/* Top accent line */}
-      <div className={`absolute top-0 left-0 right-0 h-1 ${style.accent}`} />
+      {/* Top Accent Gradient Line */}
+      <div className={`absolute top-0 left-0 right-0 h-1.5 ${style.accent}`} />
 
-      <div className="flex items-start justify-between">
-        <div>
-          <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">{title}</p>
-          <p className="mt-2 text-2xl font-bold tracking-tight font-mono text-slate-900">{value}</p>
+      <div className="flex items-start justify-between gap-3">
+        <div className="min-w-0">
+          <p className="text-[11px] font-bold text-slate-500 uppercase tracking-wider truncate">{title}</p>
+          <p className={`mt-2 text-2.5xl font-black tracking-tight font-display ${style.valueColor}`}>{value}</p>
         </div>
-        <div className={`p-2.5 rounded-xl transition-transform ${style.iconBox} shadow-xs`}>
-          <Icon className="w-5 h-5 stroke-[2]" />
+        <div className={`p-3 rounded-xl shrink-0 transition-transform ${style.iconBox}`}>
+          <Icon className="w-5 h-5 stroke-[2.2]" />
         </div>
       </div>
 
       {(subText || trend) && (
-        <div className="mt-3.5 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-          {subText && <span className="truncate">{subText}</span>}
+        <div className="mt-3.5 pt-3 border-t border-slate-200/60 flex items-center justify-between text-xs text-slate-600 gap-2">
+          {subText && <span className="truncate font-medium text-[11px]">{subText}</span>}
           {trend && (
             <span
-              className={`inline-flex items-center gap-1 font-semibold text-[11px] px-1.5 py-0.5 rounded-md ${
-                trend.isPositive ? 'bg-emerald-50 text-emerald-700' : 'bg-rose-50 text-rose-700'
+              className={`inline-flex items-center gap-1 font-bold text-[11px] px-2 py-0.5 rounded-full shrink-0 border ${
+                trend.isPositive
+                  ? 'bg-emerald-100 text-emerald-800 border-emerald-200'
+                  : 'bg-rose-100 text-rose-800 border-rose-200'
               }`}
             >
               {trend.isPositive ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
-              {trend.value}
+              <span>{trend.value}</span>
             </span>
           )}
         </div>

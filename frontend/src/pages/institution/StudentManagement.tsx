@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Search, Filter, UserPlus, ChevronLeft, ChevronRight, X, ShieldCheck, CheckCircle2 } from 'lucide-react';
+import { Search, Filter, UserPlus, ChevronLeft, ChevronRight, X, ShieldCheck, CheckCircle2, Users, GraduationCap } from 'lucide-react';
 import { StatusBadge } from '../../components/common/StatusBadge';
 import { useAuth } from '../../contexts/AuthContext';
 import { api } from '../../services/api';
@@ -23,7 +23,7 @@ export const StudentManagement: React.FC = () => {
   const [formData, setFormData] = useState({
     fullName: '',
     apaarId: '',
-    dob: '2004-05-15',
+    dob: '2005-05-15',
     gender: 'MALE',
     email: '',
     phone: '',
@@ -85,7 +85,7 @@ export const StudentManagement: React.FC = () => {
       setFormData({
         fullName: '',
         apaarId: '',
-        dob: '2004-05-15',
+        dob: '2005-05-15',
         gender: 'MALE',
         email: '',
         phone: '',
@@ -102,13 +102,21 @@ export const StudentManagement: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 font-display">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-slate-900">Institutional Student Management</h1>
-          <p className="text-sm text-slate-500 mt-1">
-            Register students, manage academic roll records, and verify identity against the central APAAR ledger.
+          <div className="flex items-center gap-2.5 flex-wrap">
+            <span className="p-2.5 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/20">
+              <Users className="w-5 h-5" />
+            </span>
+            <h1 className="text-2xl font-black tracking-tight text-slate-900">Institutional Student Roster</h1>
+            <span className="text-xs font-mono font-bold px-2.5 py-1 rounded-xl bg-blue-50 text-blue-800 border border-blue-200 shadow-2xs">
+              Academic Session 2026–2027
+            </span>
+          </div>
+          <p className="text-xs sm:text-sm text-slate-500 mt-1">
+            Enrol students, manage institutional roll records, and verify credentials against the APAAR central ledger.
           </p>
         </div>
         <button
@@ -116,7 +124,7 @@ export const StudentManagement: React.FC = () => {
             setAddSuccess(null);
             setIsAddModalOpen(true);
           }}
-          className="flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-sm transition-colors"
+          className="flex items-center gap-2 px-5 py-2.5 text-xs font-bold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 rounded-xl shadow-md shadow-blue-500/20 transition-all active:scale-98"
         >
           <UserPlus className="w-4 h-4" />
           <span>Add Student Record</span>
@@ -124,24 +132,24 @@ export const StudentManagement: React.FC = () => {
       </div>
 
       {/* Filter Bar */}
-      <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col md:flex-row gap-3 items-center justify-between">
+      <div className="bg-white p-4 rounded-2xl border border-slate-200/90 shadow-subtle flex flex-col md:flex-row gap-3 items-center justify-between">
         <div className="relative w-full md:w-80">
-          <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
+          <Search className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
           <input
             type="text"
             placeholder="Search by student name, roll number, APAAR ID..."
             value={search}
             onChange={e => setSearch(e.target.value)}
-            className="w-full pl-9 pr-3 py-2 text-xs border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full pl-9 pr-3 py-2.5 text-xs border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 font-medium bg-slate-50 hover:bg-white focus:bg-white transition-all shadow-2xs"
           />
         </div>
 
-        <div className="flex flex-wrap items-center gap-2 w-full md:w-auto">
+        <div className="flex flex-wrap items-center gap-2.5 w-full md:w-auto">
           <Filter className="w-4 h-4 text-slate-400" />
           <select
             value={programmeId}
             onChange={e => setProgrammeId(e.target.value)}
-            className="text-xs border border-slate-200 rounded-lg px-3 py-2 bg-white text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="text-xs border border-slate-200 rounded-xl px-3.5 py-2.5 bg-white text-slate-700 font-bold focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-2xs"
           >
             <option value="">All Programmes</option>
             {programmes.map(p => (
@@ -152,7 +160,7 @@ export const StudentManagement: React.FC = () => {
           <select
             value={verificationStatus}
             onChange={e => setVerificationStatus(e.target.value)}
-            className="text-xs border border-slate-200 rounded-lg px-3 py-2 bg-white text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="text-xs border border-slate-200 rounded-xl px-3.5 py-2.5 bg-white text-slate-700 font-bold focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-2xs"
           >
             <option value="">All Verification Statuses</option>
             <option value="VERIFIED">Verified</option>
@@ -163,10 +171,10 @@ export const StudentManagement: React.FC = () => {
       </div>
 
       {/* Students Table */}
-      <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+      <div className="bg-white rounded-2xl border border-slate-200/90 shadow-subtle overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="bg-slate-50 text-slate-600 border-b border-slate-200 font-semibold uppercase tracking-wider">
+            <thead className="bg-slate-50 text-slate-700 border-b border-slate-200 font-bold uppercase tracking-wider text-[10px]">
               <tr>
                 <th className="py-3 px-4">Student Name</th>
                 <th className="py-3 px-4">APAAR Identifier</th>
@@ -180,22 +188,29 @@ export const StudentManagement: React.FC = () => {
             <tbody className="divide-y divide-slate-100 text-slate-800">
               {students.map(s => (
                 <tr key={s.id + (s.enrolment_id || '')} className="hover:bg-slate-50/80 transition-colors">
-                  <td className="py-3.5 px-4 font-semibold text-slate-900">
-                    {s.full_name}
-                    <div className="text-[11px] font-normal text-slate-500">{s.email}</div>
+                  <td className="py-3.5 px-4 font-bold text-slate-900">
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-7 h-7 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-xs shrink-0">
+                        {s.full_name?.charAt(0)}
+                      </div>
+                      <div>
+                        <div>{s.full_name}</div>
+                        <div className="text-[10px] font-normal text-slate-500 font-medium">{s.email}</div>
+                      </div>
+                    </div>
                   </td>
-                  <td className="py-3.5 px-4 font-mono font-medium text-slate-600">
+                  <td className="py-3.5 px-4 font-mono font-bold text-slate-700">
                     {s.apaar_id_masked}
                   </td>
                   <td className="py-3.5 px-4">
-                    <span className="font-medium text-slate-900">{s.programme_name}</span>
-                    <span className="text-slate-400 ml-1 font-mono">({s.programme_code})</span>
+                    <span className="font-bold text-slate-900">{s.programme_name}</span>
+                    <span className="text-slate-400 ml-1 font-mono text-[10px]">({s.programme_code})</span>
                   </td>
-                  <td className="py-3.5 px-4 font-mono text-slate-700 font-medium">
+                  <td className="py-3.5 px-4 font-mono text-slate-700 font-bold">
                     {s.roll_number}
                   </td>
                   <td className="py-3.5 px-4">
-                    <span className="px-2 py-0.5 rounded bg-slate-100 text-slate-700 font-medium text-[11px]">
+                    <span className="px-2.5 py-0.5 rounded-lg bg-slate-100 text-slate-700 font-bold text-[10px] border border-slate-200">
                       {s.admission_category}
                     </span>
                   </td>
@@ -221,14 +236,14 @@ export const StudentManagement: React.FC = () => {
             <button
               disabled={pagination.page <= 1}
               onClick={() => loadStudents(pagination.page - 1)}
-              className="p-1.5 rounded border border-slate-200 hover:bg-slate-50 disabled:opacity-40 transition-colors"
+              className="p-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 disabled:opacity-40 transition-colors shadow-2xs"
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
             <button
               disabled={pagination.page >= pagination.totalPages}
               onClick={() => loadStudents(pagination.page + 1)}
-              className="p-1.5 rounded border border-slate-200 hover:bg-slate-50 disabled:opacity-40 transition-colors"
+              className="p-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 disabled:opacity-40 transition-colors shadow-2xs"
             >
               <ChevronRight className="w-4 h-4" />
             </button>
@@ -238,16 +253,16 @@ export const StudentManagement: React.FC = () => {
 
       {/* Add Student Modal */}
       {isAddModalOpen && (
-        <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-2xl max-w-lg w-full shadow-2xl border border-slate-200 overflow-hidden">
-            <div className="p-5 border-b border-slate-200 flex items-center justify-between bg-slate-50">
+        <div className="fixed inset-0 bg-slate-950/50 backdrop-blur-xs flex items-center justify-center p-4 z-50 animate-fade-in">
+          <div className="bg-white rounded-3xl max-w-lg w-full shadow-2xl border border-slate-200 overflow-hidden">
+            <div className="p-6 border-b border-slate-200 flex items-center justify-between bg-gradient-to-r from-blue-50 to-indigo-50">
               <div>
-                <h3 className="text-base font-bold text-slate-900">Add Individual Student Record</h3>
-                <p className="text-xs text-slate-500">Includes real-time simulated APAAR verification check</p>
+                <h3 className="text-base font-black text-slate-900">Add Individual Student Record</h3>
+                <p className="text-xs text-slate-500 font-medium">Includes real-time simulated APAAR verification check</p>
               </div>
               <button
                 onClick={() => setIsAddModalOpen(false)}
-                className="p-1 rounded-md text-slate-400 hover:text-slate-600 hover:bg-slate-200/50"
+                className="p-1.5 rounded-xl text-slate-400 hover:text-slate-600 hover:bg-white shadow-2xs transition-colors"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -255,11 +270,11 @@ export const StudentManagement: React.FC = () => {
 
             <form onSubmit={handleAddSubmit} className="p-6 space-y-4">
               {addSuccess && (
-                <div className="p-3 rounded-lg bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 flex items-start gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                <div className="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 flex items-start gap-2.5 shadow-2xs">
+                  <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
                   <div>
-                    <strong>Student Created Successfully!</strong>
-                    <p className="text-[11px] mt-0.5">
+                    <strong className="text-sm">Student Created & Verified!</strong>
+                    <p className="text-[11px] mt-0.5 font-medium">
                       Verification Result: {addSuccess.verification?.status} ({addSuccess.verification?.provider})
                     </p>
                   </div>
@@ -267,7 +282,7 @@ export const StudentManagement: React.FC = () => {
               )}
 
               <div>
-                <label className="block text-xs font-semibold text-slate-700 uppercase">
+                <label className="block text-[10px] font-bold text-slate-700 uppercase tracking-wider">
                   Candidate Full Name *
                 </label>
                 <input
@@ -276,13 +291,13 @@ export const StudentManagement: React.FC = () => {
                   placeholder="e.g. Sourav Mukherjee"
                   value={formData.fullName}
                   onChange={e => setFormData({ ...formData, fullName: e.target.value })}
-                  className="mt-1 w-full px-3 py-2 text-xs border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="mt-1 w-full px-3.5 py-2.5 text-xs border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 font-medium bg-slate-50 hover:bg-white focus:bg-white transition-all shadow-2xs"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 uppercase">
+                  <label className="block text-[10px] font-bold text-slate-700 uppercase tracking-wider">
                     12-Digit APAAR ID *
                   </label>
                   <input
@@ -291,33 +306,33 @@ export const StudentManagement: React.FC = () => {
                     placeholder="9824-0000-1122"
                     value={formData.apaarId}
                     onChange={e => setFormData({ ...formData, apaarId: e.target.value })}
-                    className="mt-1 w-full px-3 py-2 text-xs border border-slate-200 rounded-lg font-mono focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="mt-1 w-full px-3.5 py-2.5 text-xs border border-slate-200 rounded-xl font-mono focus:outline-none focus:ring-2 focus:ring-blue-500 font-bold bg-slate-50 hover:bg-white focus:bg-white transition-all shadow-2xs"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 uppercase">
+                  <label className="block text-[10px] font-bold text-slate-700 uppercase tracking-wider">
                     Institutional Roll No *
                   </label>
                   <input
                     type="text"
                     required
-                    placeholder="TIT-2024-CSE-901"
+                    placeholder="TIT-2026-CSE-901"
                     value={formData.rollNumber}
                     onChange={e => setFormData({ ...formData, rollNumber: e.target.value })}
-                    className="mt-1 w-full px-3 py-2 text-xs border border-slate-200 rounded-lg font-mono focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="mt-1 w-full px-3.5 py-2.5 text-xs border border-slate-200 rounded-xl font-mono focus:outline-none focus:ring-2 focus:ring-blue-500 font-bold bg-slate-50 hover:bg-white focus:bg-white transition-all shadow-2xs"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 uppercase">
+                  <label className="block text-[10px] font-bold text-slate-700 uppercase tracking-wider">
                     Programme *
                   </label>
                   <select
                     value={formData.programmeId}
                     onChange={e => setFormData({ ...formData, programmeId: e.target.value })}
-                    className="mt-1 w-full px-3 py-2 text-xs border border-slate-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="mt-1 w-full px-3.5 py-2.5 text-xs border border-slate-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 font-bold shadow-2xs"
                   >
                     {programmes.map(p => (
                       <option key={p.id} value={p.id}>{p.name} ({p.code})</option>
@@ -325,13 +340,13 @@ export const StudentManagement: React.FC = () => {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 uppercase">
+                  <label className="block text-[10px] font-bold text-slate-700 uppercase tracking-wider">
                     Admission Category *
                   </label>
                   <select
                     value={formData.admissionCategory}
                     onChange={e => setFormData({ ...formData, admissionCategory: e.target.value })}
-                    className="mt-1 w-full px-3 py-2 text-xs border border-slate-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="mt-1 w-full px-3.5 py-2.5 text-xs border border-slate-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 font-bold shadow-2xs"
                   >
                     <option value="GENERAL">General</option>
                     <option value="OBC">OBC</option>
@@ -347,24 +362,24 @@ export const StudentManagement: React.FC = () => {
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 uppercase">
+                  <label className="block text-[10px] font-bold text-slate-700 uppercase tracking-wider">
                     Date of Birth
                   </label>
                   <input
                     type="date"
                     value={formData.dob}
                     onChange={e => setFormData({ ...formData, dob: e.target.value })}
-                    className="mt-1 w-full px-3 py-2 text-xs border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="mt-1 w-full px-3.5 py-2.5 text-xs border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 font-medium shadow-2xs"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 uppercase">
+                  <label className="block text-[10px] font-bold text-slate-700 uppercase tracking-wider">
                     Gender
                   </label>
                   <select
                     value={formData.gender}
                     onChange={e => setFormData({ ...formData, gender: e.target.value })}
-                    className="mt-1 w-full px-3 py-2 text-xs border border-slate-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="mt-1 w-full px-3.5 py-2.5 text-xs border border-slate-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 font-bold shadow-2xs"
                   >
                     <option value="MALE">Male</option>
                     <option value="FEMALE">Female</option>
@@ -373,18 +388,18 @@ export const StudentManagement: React.FC = () => {
                 </div>
               </div>
 
-              <div className="pt-4 border-t border-slate-200 flex items-center justify-end gap-2">
+              <div className="pt-4 border-t border-slate-200 flex items-center justify-end gap-2.5">
                 <button
                   type="button"
                   onClick={() => setIsAddModalOpen(false)}
-                  className="px-3.5 py-2 text-xs font-semibold text-slate-700 bg-white border border-slate-200 hover:bg-slate-50 rounded-lg"
+                  className="px-4 py-2 text-xs font-bold text-slate-700 bg-white border border-slate-200 hover:bg-slate-50 rounded-xl shadow-2xs transition-all"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="px-4 py-2 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 disabled:opacity-50 rounded-lg shadow-sm"
+                  className="px-5 py-2 text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 disabled:opacity-50 rounded-xl shadow-md shadow-blue-500/20 transition-all active:scale-98"
                 >
                   {submitting ? 'Verifying & Saving...' : 'Save & Verify APAAR'}
                 </button>

@@ -109,7 +109,7 @@ export const BulkUploadWizard: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6 max-w-4xl mx-auto">
+    <div className="space-y-6 max-w-4xl mx-auto font-display">
       {/* Header */}
       <div>
         <div className="flex items-center gap-2">
@@ -424,6 +424,22 @@ export const BulkUploadWizard: React.FC = () => {
               <span className="text-[10px] text-amber-700 uppercase font-bold">Flagged for Review</span>
               <p className="text-2xl font-bold font-mono text-amber-800 mt-1">
                 {importSummary.result.mismatchCount}
+              </p>
+            </div>
+          </div>
+
+          {/* Interconnected System Trigger Notification */}
+          <div className="max-w-lg mx-auto bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200/90 rounded-2xl p-3.5 flex items-center gap-3 text-left shadow-2xs">
+            <div className="w-8 h-8 rounded-xl bg-blue-600 text-white flex items-center justify-center shrink-0 shadow-xs">
+              <Sparkles className="w-4 h-4" />
+            </div>
+            <div className="text-xs">
+              <p className="font-bold text-blue-950 flex items-center gap-1.5">
+                <span>Interconnected System Synchronized</span>
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+              </p>
+              <p className="text-[11px] text-blue-700 mt-0.5 font-medium">
+                Duplicate check completed • Admission compliance recalculated • Anomaly risk score updated in AICTE ledger.
               </p>
             </div>
           </div>

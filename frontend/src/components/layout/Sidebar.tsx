@@ -152,10 +152,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 <button
                   key={item.id}
                   onClick={() => handleItemClick(item.id)}
-                  className={`group relative w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-semibold transition-all ${
+                  className={`group relative w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all duration-150 cursor-pointer ${
                     isActive
-                      ? 'bg-blue-600 text-white shadow-sm shadow-blue-500/20'
-                      : 'text-slate-600 hover:text-slate-950 hover:bg-slate-100/80'
+                      ? 'bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 text-white shadow-md shadow-blue-500/25'
+                      : 'text-slate-600 hover:text-slate-950 hover:bg-slate-100/90'
                   }`}
                 >
                   <div className="flex items-center gap-3">
@@ -165,9 +165,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
                   {item.badge && (
                     <span
-                      className={`text-[10px] font-bold px-1.5 py-0.5 rounded-md transition-colors ${
+                      className={`text-[10px] font-bold px-2 py-0.5 rounded-md transition-colors ${
                         isActive
-                          ? 'bg-blue-700/80 text-blue-100'
+                          ? 'bg-white/20 text-white border border-white/30'
                           : item.badgeColor || 'bg-slate-100 text-slate-700'
                       }`}
                     >
@@ -183,20 +183,20 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
       {/* Bottom Network & Environment Card */}
       <div className="px-4 pt-3 mt-4 border-t border-slate-200/80">
-        <div className="p-3 rounded-xl bg-gradient-to-br from-slate-50 to-blue-50/40 border border-slate-200/90 shadow-2xs">
+        <div className="p-3.5 rounded-2xl bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/40 border border-slate-200 shadow-2xs font-display">
           <div className="flex items-center justify-between mb-1.5">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Regulatory Node</span>
+            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Prototype Node</span>
             <span className="flex items-center gap-1 text-[10px] font-bold text-emerald-600">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
               Synchronized
             </span>
           </div>
           <div className="text-xs font-bold text-slate-800">
-            {user.role === 'AICTE_ADMIN' ? 'AICTE Central HQ' : user.institution?.name?.slice(0, 24) || 'Student Registry'}
+            {user.role === 'AICTE_ADMIN' ? 'AICTE Central Node' : user.institution?.name?.slice(0, 24) || 'Student Registry'}
           </div>
-          <div className="mt-1 flex items-center justify-between text-[10px] text-slate-400">
-            <span>Academic Cycle:</span>
-            <span className="font-semibold text-slate-600">AY 2024–25</span>
+          <div className="mt-1 flex items-center justify-between text-[10px] text-slate-500">
+            <span>Session:</span>
+            <span className="font-bold text-blue-700">2026–2027</span>
           </div>
         </div>
       </div>

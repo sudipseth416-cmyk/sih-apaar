@@ -15,6 +15,8 @@ import {
   X,
   Sparkles,
   Info,
+  Calendar,
+  Layers,
 } from 'lucide-react';
 import { StatusBadge } from '../../components/common/StatusBadge';
 import { api } from '../../services/api';
@@ -102,25 +104,28 @@ export const ConflictNetwork: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 font-display">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2">
-            <span className="p-2 rounded-xl bg-amber-100 text-amber-700">
+          <div className="flex items-center gap-2.5 flex-wrap">
+            <span className="p-2.5 rounded-2xl bg-gradient-to-tr from-amber-500 to-rose-500 text-white shadow-md shadow-amber-500/20">
               <Network className="w-5 h-5" />
             </span>
-            <h1 className="text-2xl font-bold tracking-tight text-slate-900">
+            <h1 className="text-2xl font-black tracking-tight text-slate-900">
               National Student Enrolment Conflict Graph
             </h1>
+            <span className="text-xs font-mono font-bold px-2.5 py-1 rounded-xl bg-amber-50 text-amber-800 border border-amber-200 shadow-2xs">
+              Topology Engine • 2026–2027
+            </span>
           </div>
           <p className="text-xs sm:text-sm text-slate-500 mt-1 max-w-2xl">
-            Visualizing multi-institution academic relationships to detect overlapping active enrolments versus legitimate transfers with one-click resolution.
+            Visualizing cross-institutional academic linkages to identify overlapping active enrolments versus legitimate transfers with 1-click ledger reconciliation.
           </p>
         </div>
         <div className="flex items-center gap-2">
-          <span className="text-xs font-bold px-3 py-1.5 rounded-xl bg-rose-50 text-rose-700 border border-rose-200/90 shadow-2xs flex items-center gap-1.5">
-            <span className="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></span>
+          <span className="text-xs font-bold px-3 py-1.5 rounded-xl bg-gradient-to-r from-rose-50 to-amber-50 text-rose-800 border border-rose-200 shadow-2xs flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-rose-600 animate-ping"></span>
             <span>{graphData.totalConflicts} Active Overlapping Conflict(s)</span>
           </span>
         </div>
@@ -134,41 +139,41 @@ export const ConflictNetwork: React.FC = () => {
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
 
           {/* Canvas Controls Toolbar */}
-          <div className="relative z-10 p-3.5 border-b border-slate-800 bg-slate-900/80 backdrop-blur-md flex items-center justify-between">
+          <div className="relative z-10 p-3.5 border-b border-slate-800 bg-slate-900/90 backdrop-blur-md flex items-center justify-between flex-wrap gap-2">
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Topology:</span>
-              <span className="flex items-center gap-1.5 text-[11px] font-semibold text-slate-300 bg-slate-800/80 px-2.5 py-1 rounded-lg border border-slate-700">
+              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Topology Nodes:</span>
+              <span className="flex items-center gap-1.5 text-[11px] font-bold text-slate-200 bg-slate-800/90 px-2.5 py-1 rounded-lg border border-slate-700">
                 <span className="w-2 h-2 rounded-full bg-blue-400"></span> Student Node
               </span>
-              <span className="flex items-center gap-1.5 text-[11px] font-semibold text-slate-300 bg-slate-800/80 px-2.5 py-1 rounded-lg border border-slate-700">
+              <span className="flex items-center gap-1.5 text-[11px] font-bold text-slate-200 bg-slate-800/90 px-2.5 py-1 rounded-lg border border-slate-700">
                 <span className="w-2 h-2 rounded-full bg-emerald-400"></span> Institution
               </span>
-              <span className="flex items-center gap-1.5 text-[11px] font-semibold text-rose-300 bg-rose-950/60 px-2.5 py-1 rounded-lg border border-rose-800">
+              <span className="flex items-center gap-1.5 text-[11px] font-bold text-rose-300 bg-rose-950/70 px-2.5 py-1 rounded-lg border border-rose-800">
                 <span className="w-2 h-2 rounded-full bg-rose-500 animate-ping"></span> Dual Active Link
               </span>
             </div>
 
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-1.5">
               <button
                 onClick={() => setZoomLevel(prev => Math.min(1.4, prev + 0.1))}
                 className="p-1.5 rounded-lg bg-slate-800 border border-slate-700 text-slate-300 hover:bg-slate-700 hover:text-white transition-colors"
                 title="Zoom In"
               >
-                <ZoomIn className="w-3.5 h-3.5" />
+                <ZoomIn className="w-4 h-4" />
               </button>
               <button
                 onClick={() => setZoomLevel(prev => Math.max(0.7, prev - 0.1))}
                 className="p-1.5 rounded-lg bg-slate-800 border border-slate-700 text-slate-300 hover:bg-slate-700 hover:text-white transition-colors"
                 title="Zoom Out"
               >
-                <ZoomOut className="w-3.5 h-3.5" />
+                <ZoomOut className="w-4 h-4" />
               </button>
               <button
                 onClick={() => setZoomLevel(1)}
                 className="p-1.5 rounded-lg bg-slate-800 border border-slate-700 text-slate-300 hover:bg-slate-700 hover:text-white transition-colors"
                 title="Reset View"
               >
-                <Maximize2 className="w-3.5 h-3.5" />
+                <Maximize2 className="w-4 h-4" />
               </button>
             </div>
           </div>
@@ -190,6 +195,22 @@ export const ConflictNetwork: React.FC = () => {
                   <stop offset="0%" stopColor="#3B82F6" />
                   <stop offset="100%" stopColor="#64748B" />
                 </linearGradient>
+                <radialGradient id="studentConflictRadial">
+                  <stop offset="0%" stopColor="#DC2626" />
+                  <stop offset="100%" stopColor="#7F1D1D" />
+                </radialGradient>
+                <radialGradient id="studentNominalRadial">
+                  <stop offset="0%" stopColor="#2563EB" />
+                  <stop offset="100%" stopColor="#1E3A8A" />
+                </radialGradient>
+                <radialGradient id="instRadial">
+                  <stop offset="0%" stopColor="#059669" />
+                  <stop offset="100%" stopColor="#064E3B" />
+                </radialGradient>
+                <radialGradient id="progRadial">
+                  <stop offset="0%" stopColor="#4F46E5" />
+                  <stop offset="100%" stopColor="#312E81" />
+                </radialGradient>
                 <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
                   <feGaussianBlur stdDeviation="3" result="blur" />
                   <feComposite in="SourceGraphic" in2="blur" operator="over" />
@@ -217,31 +238,31 @@ export const ConflictNetwork: React.FC = () => {
                       d={pathData}
                       fill="none"
                       stroke={isConflict ? 'url(#conflictGrad)' : '#475569'}
-                      strokeWidth={isConflict ? 3 : 1.8}
+                      strokeWidth={isConflict ? 3.5 : 2}
                       strokeDasharray={isConflict ? '6 4' : undefined}
                       filter={isConflict ? 'url(#glow)' : undefined}
                     />
 
                     {/* Edge Midpoint Label Pill */}
                     <rect
-                      x={midX - 45}
+                      x={midX - 50}
                       y={midY - 12}
-                      width={90}
-                      height={22}
-                      rx={6}
+                      width={100}
+                      height={24}
+                      rx={8}
                       fill={isConflict ? '#450A0A' : '#1E293B'}
                       stroke={isConflict ? '#DC2626' : '#334155'}
                       strokeWidth={1}
                     />
                     <text
                       x={midX}
-                      y={midY + 3}
+                      y={midY + 4}
                       textAnchor="middle"
                       fontSize="9"
                       fontWeight="bold"
                       fill={isConflict ? '#FCA5A5' : '#94A3B8'}
                     >
-                      {edge.label?.slice(0, 16)}
+                      {edge.label?.slice(0, 18)}
                     </text>
                   </g>
                 );
@@ -252,21 +273,18 @@ export const ConflictNetwork: React.FC = () => {
                 const coords = getNodeCoords(node);
                 const isSelected = selectedNode?.id === node.id;
 
-                let nodeFill = '#1E293B';
-                let nodeStroke = '#475569';
+                let nodeFill = 'url(#progRadial)';
+                let nodeStroke = '#64748B';
                 let haloStroke = 'transparent';
 
                 if (node.type === 'student') {
-                  nodeFill = node.hasConflict ? '#450A0A' : '#1E3A8A';
+                  nodeFill = node.hasConflict ? 'url(#studentConflictRadial)' : 'url(#studentNominalRadial)';
                   nodeStroke = node.hasConflict ? '#EF4444' : '#3B82F6';
                   haloStroke = node.hasConflict ? 'rgba(239, 68, 68, 0.4)' : 'rgba(59, 130, 246, 0.3)';
                 } else if (node.type === 'institution') {
-                  nodeFill = '#064E3B';
+                  nodeFill = 'url(#instRadial)';
                   nodeStroke = '#10B981';
                   haloStroke = 'rgba(16, 185, 129, 0.3)';
-                } else {
-                  nodeFill = '#0F172A';
-                  nodeStroke = '#64748B';
                 }
 
                 return (
@@ -316,7 +334,7 @@ export const ConflictNetwork: React.FC = () => {
                       textAnchor="middle"
                       fontSize="8"
                       fill="#94A3B8"
-                      className="select-none"
+                      className="select-none font-medium"
                     >
                       {node.subLabel}
                     </text>
@@ -326,9 +344,9 @@ export const ConflictNetwork: React.FC = () => {
             </svg>
           </div>
 
-          <div className="p-3 bg-slate-900 border-t border-slate-800 text-xs text-slate-400 flex items-center justify-between">
+          <div className="p-3.5 bg-slate-900 border-t border-slate-800 text-xs text-slate-400 flex items-center justify-between">
             <span className="flex items-center gap-1.5">
-              <Info className="w-3.5 h-3.5 text-blue-400" />
+              <Info className="w-4 h-4 text-blue-400" />
               <span>Select any node on canvas to inspect evidence details and regulatory history.</span>
             </span>
             <span className="font-bold text-slate-300">Live Regulatory Graph Topology</span>
@@ -358,30 +376,31 @@ export const ConflictNetwork: React.FC = () => {
             {selectedCase ? (
               <div className="mt-4 space-y-4">
                 {/* Conflict Classification Card */}
-                <div className="p-3.5 bg-rose-50/70 rounded-xl border border-rose-200/90 text-xs text-rose-900 shadow-2xs">
+                <div className="p-3.5 bg-rose-50/80 rounded-xl border border-rose-200 text-xs text-rose-900 shadow-2xs">
                   <div className="font-bold mb-1 flex items-center gap-1.5 text-rose-800">
                     <AlertTriangle className="w-4 h-4 text-rose-600 shrink-0" />
                     <span>Overlapping Enrolment Violation</span>
                   </div>
-                  <p className="text-[11px] text-rose-800/90 leading-relaxed">
+                  <p className="text-[11px] text-rose-800/90 leading-relaxed font-medium">
                     {selectedCase.conflictCase.case_notes}
                   </p>
                 </div>
 
                 {/* Conflicting Institutions Comparison */}
                 <div>
-                  <h4 className="text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-2">
-                    Conflicting Enrolment Records
+                  <h4 className="text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                    <Building2 className="w-3.5 h-3.5 text-slate-500" />
+                    <span>Conflicting Enrolment Records</span>
                   </h4>
                   <div className="space-y-2.5">
                     {selectedCase.linkedEnrolments.map((enr: any, idx: number) => (
-                      <div key={enr.id} className="p-3 rounded-xl border border-slate-200 bg-slate-50 text-xs shadow-2xs">
+                      <div key={enr.id} className="p-3.5 rounded-xl border border-slate-200 bg-slate-50 text-xs shadow-2xs">
                         <div className="flex items-center justify-between">
                           <span className="font-bold text-slate-900">College {idx === 0 ? 'A' : 'B'}: {enr.institution_name}</span>
                           <StatusBadge status={enr.enrolment_status} size="sm" />
                         </div>
-                        <p className="text-slate-600 mt-1 font-medium">{enr.programme_name} ({enr.programme_code})</p>
-                        <div className="flex justify-between text-slate-500 text-[11px] mt-1.5 font-mono pt-1.5 border-t border-slate-200/60">
+                        <p className="text-slate-700 mt-1 font-semibold">{enr.programme_name} ({enr.programme_code})</p>
+                        <div className="flex justify-between text-slate-500 text-[11px] mt-2 font-mono pt-1.5 border-t border-slate-200">
                           <span>Admitted: {enr.admission_date}</span>
                           <span>Roll: {enr.roll_number}</span>
                         </div>
@@ -406,7 +425,7 @@ export const ConflictNetwork: React.FC = () => {
                     <button
                       onClick={handleResolve}
                       disabled={resolving || !resolutionText}
-                      className="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all shadow-sm active:scale-98"
+                      className="w-full py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 disabled:opacity-50 text-white rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all shadow-md shadow-emerald-500/20 active:scale-98"
                     >
                       <ShieldCheck className="w-4 h-4" />
                       <span>{resolving ? 'Recording Resolution...' : 'Resolve Conflict & Update Ledger'}</span>
@@ -422,7 +441,7 @@ export const ConflictNetwork: React.FC = () => {
           </div>
 
           <div className="pt-3 text-[10px] text-slate-400 text-center font-medium">
-            AICTE Cross-Institution Conflict Network Engine
+            AICTE Cross-Institution Conflict Network Engine • Team Stratix 2026–2027
           </div>
         </div>
       </div>

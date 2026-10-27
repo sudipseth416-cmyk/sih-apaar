@@ -138,12 +138,12 @@ export const Navbar: React.FC<NavbarProps> = ({ mobileMenuOpen = false, onToggle
               <span className="font-extrabold text-slate-950 tracking-tight text-base sm:text-lg whitespace-nowrap leading-tight">
                 APAAR-Sentinel
               </span>
-              <span className="hidden sm:inline-flex text-[9px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200/80 shadow-2xs whitespace-nowrap">
-                AICTE Suite
+              <span className="hidden sm:inline-flex text-[9px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-blue-100 text-blue-800 border border-blue-200 shadow-2xs whitespace-nowrap">
+                Team Stratix • 2026–2027
               </span>
             </div>
             <p className="hidden md:block text-[11px] text-slate-500 font-medium whitespace-nowrap truncate max-w-[280px]">
-              Secure Student Data • Smarter Governance
+              AICTE Student Identity & Quota Compliance Prototype
             </p>
           </div>
         </div>
